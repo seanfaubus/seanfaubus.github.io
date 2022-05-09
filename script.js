@@ -5,6 +5,11 @@ $(document).ready(function(){
         }else{
             $('.navbar').removeClass("sticky");
         }
+        if(this.scrollY > 20){
+            $('.navText').css("color", "#2c3e50");
+        }else{
+            $('.navText').css("color", "azure");
+        }
     });
     // toggle menu/navbar script
     $('.menu-btn').click(function(){
