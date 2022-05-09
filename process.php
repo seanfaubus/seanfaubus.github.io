@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Sean Faubus - Contact</title>
+        <title>Sean Faubus - Home</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="https://seanfaub.us/images/frogo.png" />
         <!-- Font Awesome icons (free version)-->
@@ -33,7 +33,7 @@
 
     <nav class="navbar">
         <div class="max-width">
-            <div class="logo">Contact.</div>
+            <div class="logo">Welcome.</div>
            <ul class="menu">
                <li><a class="navText" href="https://seanfaub.us/">Home</a></li>
                <li><a class="navText" href="https://seanfaub.us/contact.html">Contact</a></li>
@@ -46,23 +46,60 @@
     </nav>
 <!-- home section start -->
 <section class="home" id="home">
-<div class="contact" id="home">
-    <form action="#" method="post">
+    <div class="max-width">
+    <?php
+  
+  if($_POST) {
+      $visitor_name = "";
+      $visitor_email = "";
+      $visitor_message = "";
+      $subject = "Faubus Contact Page";
+      $email_body = "<div>";
+        
+      if(isset($_POST['visitor_name'])) {
+          $visitor_name = filter_var($_POST['visitor_name'], FILTER_SANITIZE_STRING);
+          $email_body .= "<div>
+                             <label><b>Visitor Name:</b></label>&nbsp;<span>".$visitor_name."</span>
+                          </div>";
+      }
+   
+      if(isset($_POST['visitor_email'])) {
+          $visitor_email = str_replace(array("\r", "\n", "%0a", "%0d"), '', $_POST['visitor_email']);
+          $visitor_email = filter_var($visitor_email, FILTER_VALIDATE_EMAIL);
+          $email_body .= "<div>
+                             <label><b>Visitor Email:</b></label>&nbsp;<span>".$visitor_email."</span>
+                          </div>";
+      }
+      
+      if(isset($_POST['visitor_message'])) {
+          $visitor_message = htmlspecialchars($_POST['visitor_message']);
+          $email_body .= "<div>
+                              <label><b>Visitor Message:</b></label>
+                              <div>".$visitor_message."</div>
+                          </div>";
+      }
+      
+      $recipient = "seanfaubus@gmail.com";
+        
+      $email_body .= "</div>";
+   
+      $headers  = 'MIME-Version: 1.0' . "\r\n"
+      .'Content-type: text/html; charset=utf-8' . "\r\n"
+      .'From: ' . $visitor_email . "\r\n";
+        
+      if(mail($recipient, $subject, $email_body, $headers)) {
+          echo "<p>Thank you for contacting me, $visitor_name. I have received your feedback!</p>";
+      } else {
+          echo '<p>We are sorry but the email did not go through.</p>';
+      }
+        
+  } else {
+      echo '<p>Something went wrong</p>';
+  }
+  ?>
 
-        <label for="name" id="name-label">Name</label>
-        <input type="text" class="contactInput" id="name" name="visitor_name" placeholder="Enter your name." autofocus>
+    </div>
 
-        <label for="email" id="email-label">Email</label>
-        <input type="email" class="contactInput" id="email" name="visitor_email" placeholder="Enter your email." required>
-
-        <label for="message" id="message-label">Message</label>
-        <textarea id="message" class="contactMessage" name="visitor_message" placeholder="Please leave a message." required></textarea>
-
-        <button type="submit" value="Submit">Send Message</button>
-
-    </form>
-
-</div>
 </section>
 
 <!-- footer section start -->
