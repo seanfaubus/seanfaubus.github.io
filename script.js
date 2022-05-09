@@ -6,9 +6,9 @@ $(document).ready(function(){
             $('.navbar').removeClass("sticky");
         }
         if(this.scrollY > 20){
-            $('.navText').css("color", "#2c3e50");
-        }else{
             $('.navText').css("color", "azure");
+        }else{
+            $('.navText').css("color", "#2c3e50");
         }
     });
     // toggle menu/navbar script
